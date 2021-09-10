@@ -110,7 +110,7 @@ impl Window {
         let setup = xcb_connection.conn.get_setup();
         let screen = setup
             .roots()
-            .nth(xcb_connection.xlib_display as usize)
+            .nth(xcb_connection.xlib_screen_num as usize)
             .unwrap();
 
         let foreground = xcb_connection.conn.generate_id();

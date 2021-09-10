@@ -18,7 +18,7 @@ pub(crate) struct Atoms {
 
 pub struct XcbConnection {
     pub conn: xcb::Connection,
-    pub xlib_display: i32,
+    pub xlib_screen_num: i32,
 
     pub(crate) atoms: Atoms,
 
@@ -52,7 +52,7 @@ impl XcbConnection {
 
         Ok(Self {
             conn,
-            xlib_display,
+            xlib_screen_num: xlib_display,
 
             atoms: Atoms {
                 wm_protocols,
@@ -121,7 +121,7 @@ impl XcbConnection {
     fn get_scaling_screen_dimensions(&self) -> Option<f64> {
         // Figure out screen information
         let setup = self.conn.get_setup();
-        let screen = setup.roots().nth(self.xlib_display as usize).unwrap();
+        let screen = setup.roots().nth(self.xlib_screen_num as usize).unwrap();
 
         // Get the DPI from the screen struct
         //
